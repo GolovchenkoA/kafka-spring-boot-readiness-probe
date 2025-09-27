@@ -1,8 +1,18 @@
+application:
+  name: Kafka Readiness Probe
 server:
   port: 8081
+
 spring:
+  boot:
+      admin:
+        client:
+          url: http://localhost:4444
+          instance:
+            prefer-ip: true
   kafka:
     bootstrap-servers: localhost:19092
+
 #    consumer:
 #      group-id: my-group
 #      auto-offset-reset: earliest
@@ -17,6 +27,10 @@ logging:
     com:
       example: info
 management:
+  info:
+    env:
+      enabled: true # spring boot admin client
+
   # Optional Kafka health check timeout tuning (default is 5 seconds)
   health:
     kafka:
@@ -24,7 +38,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,readiness,liveness
+#        include: health,readiness,liveness
+        include: "*"
   endpoint:
     health:
       show-details: always

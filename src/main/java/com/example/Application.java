@@ -18,7 +18,6 @@ package com.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationFailedEvent;
@@ -28,7 +27,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-//import org.springframework.kafka.annotation.BackOff;
 import org.springframework.retry.annotation.Backoff;
 /**
  * Sample shows use of topic-based retry.
