@@ -1,0 +1,54 @@
+
+Original project: https://github.com/spring-projects/spring-kafka/tree/main/samples/sample-04
+
+It was updated to provide readiness probe for kafka. When Cluster is not available
+Endpoint http://localhost:8081/actuator/health  status is  DOWN
+Endpoint http://localhost:8081/actuator/health/readiness returns:
+
+{
+  "status": "DOWN",
+  "components": {
+    "kafka": {
+      "status": "DOWN",
+      "details": {
+        "error": "java.util.concurrent.ExecutionException: org.apache.kafka.common.errors.TimeoutException: Timed out waiting for a node assignment. Call: listNodes"
+      }
+    }
+  }
+}
+
+
+
+== Sample 4
+
+!!! App port was changed to 8081 !!!!!!!!!!!!!!
+
+This sample demonstrates non-blocking retry (`@RetryableTopic`) with a simple producer and consumer; the producer sends Strings posted to the rest controller.
+
+Strings starting with `fail` are rejected and retried.
+
+Run the application and use curl to send some data:
+
+`$ curl -X POST http://localhost:8080/send/fail; curl -X POST http://localhost:8080/send/good`
+
+Console:
+
+[source, bash]
+----
+
+2021-05-11 16:17:55.372  INFO 75520 --- [ fooGroup-0-C-1] com.example.Application : Received: fail from topic4 @ xx
+
+2021-05-11 16:17:55.399  INFO 75520 --- [ fooGroup-0-C-1] com.example.Application : Received: good from topic4 @ xx
+
+2021-05-11 16:17:57.384  INFO 75520 --- [etry-2000-0-C-1] com.example.Application : Received: fail from topic4-retry-2000 @ xx
+
+2021-05-11 16:18:01.390  INFO 75520 --- [etry-4000-0-C-1] com.example.Application : Received: fail from topic4-retry-4000 @ xx
+
+2021-05-11 16:18:09.399  INFO 75520 --- [etry-8000-0-C-1] com.example.Application : Received: fail from topic4-retry-8000 @ xx
+
+2021-05-11 16:18:19.407  INFO 75520 --- [try-10000-0-C-1] com.example.Application : Received: fail from topic4-retry-10000 @ xx
+
+2021-05-11 16:18:19.918  INFO 75520 --- [Group-dlt-0-C-1] com.example.Application : DLT Received: fail from topic4-dlt @ xx
+----
+
+As you can see the "good" record is processed while the failed record is retried by the series of retry topics.

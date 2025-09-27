@@ -1,0 +1,36 @@
+# Maven target directory
+/target/
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+*.iws
+
+# IntelliJ IDEA workspace files
+*.ipr
+out/
+
+# Mac OS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment config
+.env
+
+# Eclipse (if ever used)
+.classpath
+.project
+.settings/
+
+# Maven wrapper
+.mvn/
+mvnw
+mvnw.cmd
+
+# Test reports (optional)
+surefire-reports/

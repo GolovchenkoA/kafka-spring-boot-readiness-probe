@@ -1,0 +1,43 @@
+server:
+  port: 8081
+spring:
+  kafka:
+    bootstrap-servers: localhost:19092
+#    consumer:
+#      group-id: my-group
+#      auto-offset-reset: earliest
+#    producer:
+#      retries: 1
+logging:
+  level:
+    #root: off
+#    org:
+#      springframework:
+#        kafka: error
+    com:
+      example: info
+management:
+  # Optional Kafka health check timeout tuning (default is 5 seconds)
+  health:
+    kafka:
+      timeout: 3000ms
+  endpoints:
+    web:
+      exposure:
+        include: health,readiness,liveness
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: kafka
+          status:
+            up: UP
+            down: DOWN
+
+
+
+
+
